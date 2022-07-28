@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PromoRealtime.ApiWeb.Hubs;
 
 namespace PromoRealtime.ApiWeb {
     public class Startup {
@@ -20,6 +21,7 @@ namespace PromoRealtime.ApiWeb {
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
@@ -39,6 +41,10 @@ namespace PromoRealtime.ApiWeb {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSignalR(config => {
+                config.MapHub<PromoHub>("/PromoHub");
             });
         }
     }
