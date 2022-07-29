@@ -12,7 +12,43 @@ connection.on("CadastradoSucesso", function () {
 });
 
 connection.on("ReceberPromocao", function (promocao) {
-    console.info(promocao);
+
+    //container chamada
+    var titulo = document.createElement("h1");
+    titulo.innerText = promocao.empresa;
+
+    var descricao = document.createElement("p");
+    descricao.innerText = promocao.chamada;
+
+    var regras = document.createElement("p");
+    regras.innerText = promocao.regras;
+
+    var containerChamada = document.createElement("div");
+    containerChamada.setAttribute("class", "container-chamada");
+    containerChamada.appendChild(titulo);
+    containerChamada.appendChild(descricao);
+    containerChamada.appendChild(regras);
+
+    //botão
+    var link = document.createElement("a");
+    link.innerText = "Pegar";
+    link.setAttribute("href", promocao.enderecoURL);
+    link.setAttribute("target", "_blank");
+
+    var containerBotao = document.createElement("div");
+    containerBotao.setAttribute("class", "container-botao");
+    containerBotao.appendChild(link);
+
+    //container promoção
+    var containerPromo = document.createElement("div");
+    containerPromo.setAttribute("class", "container-promo");
+    containerPromo.setAttribute("style", "margin: 10px");
+    containerPromo.appendChild(containerChamada);
+    containerPromo.appendChild(containerBotao);
+
+    //container geral
+    var container = document.getElementById("container-login");
+    container.appendChild(containerPromo);
 });
 
 var btnCadastrar = document.getElementById("btnCadastrar");
