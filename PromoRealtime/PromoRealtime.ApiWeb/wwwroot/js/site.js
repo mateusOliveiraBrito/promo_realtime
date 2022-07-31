@@ -1,9 +1,9 @@
 ﻿var connection = new signalR.HubConnectionBuilder().withUrl("/PromoHub").build();
 
-connection.start().then(function () {
-    console.info("SignalR conectado!");
-}).catch(function (erro) {
-    console.error(erro.toString());
+start();
+
+connection.onclosed(async () => {
+    await start();
 });
 
 connection.on("CadastradoSucesso", function () {
@@ -67,5 +67,14 @@ if (btnCadastrar != null) {
         }).catch(function (erro) {
             console.error(erro.toString());
         });
+    });
+}
+
+function start() {
+    connection.start().then(function () {
+        console.info("SignalR conectado!");
+    }).catch(function (erro) {
+        console.error(erro.toString());
+        setTimeout(() => start(), 5000);
     });
 }
