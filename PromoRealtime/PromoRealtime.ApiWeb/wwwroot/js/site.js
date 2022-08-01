@@ -2,7 +2,7 @@
 
 start();
 
-connection.onclosed(async () => {
+connection.onclose(async () => {
     await start();
 });
 
